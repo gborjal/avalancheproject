@@ -9,9 +9,11 @@ contract DegenToken is ERC20Burnable, Ownable {
     event TransferredToken(address indexed sender,address indexed reciever, uint256 amount);
     event RedeemedToken(address indexed sender, uint256 itemCode, uint256 amount);
     event BurnedToken(address indexed sender, uint256 amount);
+
     constructor (uint256 initialSupply) ERC20("Degen","DGN") Ownable(_msgSender()){
         _mint(msg.sender,initialSupply);
     }
+
     function decimals() override public pure returns (uint8){
         return 0;
     }
@@ -49,7 +51,7 @@ contract DegenToken is ERC20Burnable, Ownable {
         }
 
         if(balanceOf(_msgSender()) < tokenPrice){
-            revert("Insuficient balance.");
+            revert("Insuficient DegenToken balance.");
         }
         burn(tokenPrice);
         emit RedeemedToken(_msgSender(), itemCode, tokenPrice);
