@@ -32,7 +32,7 @@ contract DegenToken is ERC20Burnable, Ownable {
         return true;
     }
     function shop() public pure returns (string memory){
-        return "Items in shop: (101,100DGN) NFT small pack, (201,500DGN) NFT Medium pack, (301,1000DGN) NFT Large pack";
+        return "Items in shop: (101,100DGN) NFT small pack, (201,400DGN) NFT Medium pack, (301,800DGN) NFT Large pack";
     }
     function redeemToken(uint256 itemCode)external{
         uint256 tokenPrice;
