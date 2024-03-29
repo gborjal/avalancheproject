@@ -12,12 +12,12 @@ contract DegenToken is ERC20Burnable, Ownable {
     constructor (uint256 initialSupply) ERC20("Degen","DGN") Ownable(_msgSender()){
         _mint(msg.sender,initialSupply);
     }
+    function decimals() override public pure returns (uint8){
+        return 0;
+    }
     modifier enoughToken(uint256 _value){
         require(balanceOf(_msgSender()) >= _value,"Insuficient DegenToken");
         _;
-    }
-    function decimals() override public pure returns (uint8){
-        return 0;
     }
     function mint(address dest, uint256 amount) onlyOwner public {
         _mint(dest, amount);
