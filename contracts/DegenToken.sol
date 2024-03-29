@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 
 contract DegenToken is ERC20Burnable, Ownable {
     event TransferredToken(address indexed sender,address indexed reciever, uint256 amount);
-    event RedeemedToken(address indexed sender, uint256 amount);
+    event RedeemedToken(address indexed sender, uint256 itemCode, uint256 amount);
     event BurnedToken(address indexed sender, uint256 amount);
     constructor (uint256 initialSupply) ERC20("Degen","DGN") Ownable(_msgSender()){
         _mint(msg.sender,initialSupply);
@@ -32,18 +32,18 @@ contract DegenToken is ERC20Burnable, Ownable {
         return true;
     }
     function shop() public pure returns (string memory){
-        return "Items in shop: (101) NFT small pack, (201) NFT Medium pack, (301) NFT Large pack";
+        return "Items in shop: (101,100DGN) NFT small pack, (201,500DGN) NFT Medium pack, (301,1000DGN) NFT Large pack";
     }
     function redeemToken(uint256 itemCode)external{
         uint256 tokenPrice;
 
         tokenPrice = 0;
-        if (itemCode == 101) {
+        if (itemCode == 101) {          //NFT small pack
             tokenPrice = 100;
-        } else if (itemCode == 201) {
-            tokenPrice = 500;
-        } else if (itemCode == 301) {
-            tokenPrice = 1000;
+        } else if (itemCode == 201) {   //NFT medium pack
+            tokenPrice = 400;
+        } else if (itemCode == 301) {   //NFT big pack
+            tokenPrice = 800;
         } else {
             revert("Invalid redeem type");
         }
@@ -52,7 +52,7 @@ contract DegenToken is ERC20Burnable, Ownable {
             revert("Insuficient balance.");
         }
         burn(tokenPrice);
-        emit RedeemedToken(_msgSender(), tokenPrice);
+        emit RedeemedToken(_msgSender(), itemCode, tokenPrice);
     }
     function burnToken(uint256 amount) enoughToken(amount) public{
         burn(amount);
